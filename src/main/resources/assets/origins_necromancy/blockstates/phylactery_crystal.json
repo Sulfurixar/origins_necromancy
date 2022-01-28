@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "b=true": {
+            "model": "minecraft:block/air"
+        },
+        "b=false": {
+            "model": "origins_necromancy:block/phylactery_crystal"
+        }
+    }
+}
