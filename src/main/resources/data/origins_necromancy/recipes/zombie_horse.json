@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:zombie_horse_0"
+        },
+        {
+            "item": "origins_necromancy:zombie_horse_1"
+        },
+        {
+            "item": "origins_necromancy:zombie_horse_2"
+        },
+        {
+            "item": "origins_necromancy:zombie_horse_3"
+        },
+        {
+            "item": "origins_necromancy:zombie_horse_4"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:zombie_horse"
+    }
+}

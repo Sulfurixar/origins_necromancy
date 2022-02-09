@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:zoglin_0"
+        },
+        {
+            "item": "origins_necromancy:zoglin_1"
+        },
+        {
+            "item": "origins_necromancy:zoglin_2"
+        },
+        {
+            "item": "origins_necromancy:zoglin_3"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:zoglin"
+    }
+}

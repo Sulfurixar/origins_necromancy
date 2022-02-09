@@ -1,0 +1,35 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:wither_0"
+        },
+        {
+            "item": "origins_necromancy:wither_1"
+        },
+        {
+            "item": "origins_necromancy:wither_2"
+        },
+        {
+            "item": "origins_necromancy:wither_3"
+        },
+        {
+            "item": "origins_necromancy:wither_4"
+        },
+        {
+            "item": "origins_necromancy:wither_5"
+        },
+        {
+            "item": "origins_necromancy:wither_6"
+        },
+        {
+            "item": "origins_necromancy:wither_7"
+        },
+        {
+            "item": "origins_necromancy:wither_8"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:wither"
+    }
+}

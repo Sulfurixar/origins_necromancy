@@ -1,0 +1,35 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:skeleton_trap_0"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_1"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_2"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_3"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_4"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_5"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_6"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_7"
+        },
+        {
+            "item": "origins_necromancy:skeleton_trap_8"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:skeleton_trap"
+    }
+}

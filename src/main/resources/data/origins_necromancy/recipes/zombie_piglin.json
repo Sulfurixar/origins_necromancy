@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:zombie_piglin_0"
+        },
+        {
+            "item": "origins_necromancy:zombie_piglin_1"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:zombie_piglin"
+    }
+}

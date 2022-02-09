@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "origins_necromancy:husk_0"
+        },
+        {
+            "item": "origins_necromancy:husk_1"
+        },
+        {
+            "item": "origins_necromancy:husk_2"
+        }
+    ],
+    "result": {
+        "item": "origins_necromancy:husk"
+    }
+}
