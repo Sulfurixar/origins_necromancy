@@ -3,6 +3,10 @@
     "origins_necromancy.low_levels": "You don't have enough life essence!",
     "origins_necromancy.already_charged": "This phylactery is already charged.",
 
+    "block.origins_necromancy.phylactery_crystal": "Phylactery Crystal",
+    "block.origins_necromancy.phylactery_base": "Phylactery Base",
+    "item.origins_necromancy.phylactery_crtstal_anim": "Phylactery Crystal",
+
     "item.origins_necromancy.skeleton": "Book of Skeletons",
     "item.origins_necromancy.zombie": "Book of Zombies",
     "item.origins_necromancy.leader_of_souls": "Leader Of Souls",

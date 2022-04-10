@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-      "layer0": "origins_necromancy:item/skeleton"
+      "layer0": "origins_necromancy:item/book_page_written"
     }
 }

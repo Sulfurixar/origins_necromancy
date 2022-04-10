@@ -23,14 +23,12 @@ public class BookItem extends WrittenBookItem {
     }
 
     private boolean addSoul(NbtCompound nbt, String soul, PlayerEntity user) {
-
         NbtCompound souls;
         if (!nbt.contains("souls") || nbt.get("souls").getType() != NbtType.COMPOUND) {
             souls = new NbtCompound();
         } else {
             souls = nbt.getCompound("souls");
         }
-
         if (!souls.contains(soul) || souls.get(soul).getType() != NbtType.INT) {
             souls.putInt(soul, 1);
         } else {
@@ -42,19 +40,36 @@ public class BookItem extends WrittenBookItem {
 
             souls.putInt(soul, count+1);
         }
-
+        
+        nbt.put("souls", souls);
         return true;
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        
+        boolean openBook = true;
+
+        if (!world.isClient()) {
+            openBook = handleBook(itemStack, user);
+        }
+
+        if (openBook) {
+            user.useBook(itemStack, hand);
+            user.incrementStat(Stats.USED.getOrCreateStat(this));
+        }
+        return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    public boolean handleBook(ItemStack itemStack, PlayerEntity user) {
         ItemStack offhandStack = user.getOffHandStack();
         
         if (itemStack.getItem().toString().equals("master_book")) {
 
             NbtCompound nbt = itemStack.getOrCreateNbt();
             // bypass entire book opening if we are crafting
+            boolean success = true;
             for (int i = 0; i < ItemGen.can_craft.length; i++) {
                 if (offhandStack.getItem().toString().equals(ItemGen.can_craft[i])) {
                     switch(ItemGen.can_craft[i]) {
@@ -67,24 +82,25 @@ public class BookItem extends WrittenBookItem {
                         case "zoglin":
                         case "zombie_horse":
                         case "zombie_villager":
-                            if (!addSoul(nbt,ItemGen.can_craft[i], user)) {
-                                return TypedActionResult.success(itemStack, false);
-                            }
+                            success = addSoul(nbt,ItemGen.can_craft[i], user);
                             break;
 
                         case "zombie_piglin":
-                            if (!addSoul(nbt,"piglin", user)) {
-                                return TypedActionResult.success(itemStack, false);
-                            }
+                            success = addSoul(nbt,ItemGen.can_craft[i], user);
                             break;
                         case "skeleton_trap":
-                            if (!addSoul(nbt,"skeleton_horse", user)) {
-                                return TypedActionResult.success(itemStack, false);
-                            }
+                            success = addSoul(nbt,ItemGen.can_craft[i], user);
+                            break;
+                        default:
+                            OriginsNecromancy.LOGGER.atError().log("Unexpexted behaviour with missing book type.");
+                            success = false;
                             break;
                     }
 
-                    offhandStack.decrement(1);
+                    if (success) {
+                        offhandStack.decrement(1);
+                        return false;
+                    }
                     break;
                 }
             }
@@ -110,11 +126,8 @@ public class BookItem extends WrittenBookItem {
             }
 
             itemStack.setNbt(nbt);
-
         }
-        user.useBook(itemStack, hand);
-        user.incrementStat(Stats.USED.getOrCreateStat(this));
-        return TypedActionResult.success(itemStack, world.isClient());
+        return true;
     }
     
 }
