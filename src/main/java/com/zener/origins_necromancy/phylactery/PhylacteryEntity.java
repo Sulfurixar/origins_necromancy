@@ -25,6 +25,8 @@ public class PhylacteryEntity extends BlockEntity {
         if (uuid != null) {
             tag.putUuid("UUID", uuid);
         }
+        tag.putBoolean("b", this.getCachedState().get(PhylacteryCrystalBlock.ON_BASE));
+        tag.putBoolean("c", this.getCachedState().get(PhylacteryCrystalBlock.CHARGED));
         return tag;
     }
 
