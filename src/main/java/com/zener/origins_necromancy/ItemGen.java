@@ -53,7 +53,7 @@ public class ItemGen {
                 items.add(book);
                 if (i > 0) {
                     for (int n = 0; n < i+1; n++) {
-                        Item sub_book = new BookItem(new Item.Settings().maxCount(1).group(ItemGroup.MISC));
+                        Item sub_book = new PageItem(new Item.Settings().maxCount(1).group(ItemGroup.MISC));
                         Registry.register(Registry.ITEM, new Identifier(OriginsNecromancy.MOD_ID, strArr[j]+"_"+n), sub_book);
                         items.add(sub_book);
                     }
