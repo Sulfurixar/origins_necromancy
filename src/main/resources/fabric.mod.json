@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "com.zener.origins_necromancy.OriginsNecromancy"
+    ],
+    "cardinal-components": [
+      "com.zener.origins_necromancy.components.ComponentHandler"
     ]
   },
   "mixins": [
@@ -33,5 +36,10 @@
     "java": ">=16"
   },
   "suggests": {
+  },
+  "custom": {
+    "cardinal-components": [
+      "origins_necromancy:phylactery_player"
+    ]
   }
 }

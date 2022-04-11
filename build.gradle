@@ -17,6 +17,19 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
+	mavenCentral()
+
+    maven {
+        name = "Ladysnake Mods"
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+    }
+
+	maven {
+		name = "Fastutil"
+		url = "https://mvnrepository.com/artifact/it.unimi.dsi/fastutil"
+
+	}
+
 }
 
 dependencies {
@@ -25,8 +38,23 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modImplementation 'it.unimi.dsi:fastutil:8.5.8'
+	include 'it.unimi.dsi:fastutil:8.5.8'
+
+	// Adds a dependency on the base cardinal components module (required by every other module)
+    // Replace modImplementation with modApi if you expose components in your own API
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
+    // Adds a dependency on a specific module
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
+    // Includes Cardinal Components API as a Jar-in-Jar dependency (optional)
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
 }
 
 processResources {
