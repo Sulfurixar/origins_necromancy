@@ -87,6 +87,11 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
             }
             player.experienceLevel = player.experienceLevel - 40;
             world.setBlockState(pos, state.with(CHARGED, true));
+            BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof PhylacteryEntity) {
+                PhylacteryEntity e = (PhylacteryEntity) entity;
+                e.uuid = player.getUuid();
+            }
             return ActionResult.SUCCESS;
         } else {
             player.sendMessage(TranslatedTexts.LOW_LEVELS, true);
