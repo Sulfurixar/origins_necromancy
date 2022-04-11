@@ -1,6 +1,7 @@
 package com.zener.origins_necromancy.phylactery;
 
 import com.zener.origins_necromancy.BlockGen;
+import com.zener.origins_necromancy.OriginsNecromancy;
 import com.zener.origins_necromancy.TranslatedTexts;
 
 import org.jetbrains.annotations.Nullable;
@@ -14,6 +15,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -91,6 +93,11 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
             if (entity instanceof PhylacteryEntity) {
                 PhylacteryEntity e = (PhylacteryEntity) entity;
                 e.uuid = player.getUuid();
+            }
+            if (!world.isClient) {
+                System.out.println(OriginsNecromancy.PHYLACTERY_ADVANCEMENT.getId().toString());
+                ((ServerPlayerEntity)player).getAdvancementTracker().grantCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
+                ((ServerPlayerEntity)player).getAdvancementTracker().revokeCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
             }
             return ActionResult.SUCCESS;
         } else {

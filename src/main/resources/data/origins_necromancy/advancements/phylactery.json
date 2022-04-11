@@ -1,0 +1,15 @@
+{
+    "criteria": {
+        "command": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "requirements": [
+        [
+            "command"
+        ]
+    ],
+    "rewards": {
+        "function": "origins_necromancy:revoke_root"
+    }
+}
