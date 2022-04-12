@@ -31,8 +31,10 @@ public class PhylacteryCommand {
     }
 
     private static boolean check(@NotNull CommandSource source, @NotNull String permission, int defaultRequireLevel) {
-        if (source.hasPermissionLevel(defaultRequireLevel)) {return true; }
-        return Permissions.getPermissionValue(source, permission).orElse(false);
+        if (source.hasPermissionLevel(defaultRequireLevel)) { return true; }
+        boolean perm = Permissions.getPermissionValue(source, permission).orElse(false);
+
+        if (perm) { return true; } else { return false; }
     }
 
     private static PhylacteryEntity findPhylactery(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
@@ -48,7 +50,7 @@ public class PhylacteryCommand {
         Iterator<ServerWorld> iterator = ((ServerPlayerEntity)player).server.getWorlds().iterator();
         while (iterator.hasNext()) {
             ServerWorld world = iterator.next();
-            if (world.getDimension().toString().equals(component.world())) {
+            if (world.getDimension().getSuffix().equals(component.world())) {
                 BlockEntity blockEntity = world.getBlockEntity(phylacteryPos);
                 if (!(blockEntity instanceof PhylacteryEntity)) {
                     source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".no_phylactery"), false);
@@ -81,7 +83,7 @@ public class PhylacteryCommand {
         }).build();
 
         LiteralCommandNode<ServerCommandSource> phylacteryRootTeleport = CommandManager.literal("teleport")
-        .requires(require(OriginsNecromancy.MOD_ID+"teleport", 4))
+        .requires(require(OriginsNecromancy.MOD_ID+"teleport", 2))
         .executes(ctx -> {
             ServerCommandSource source = ctx.getSource();
             ServerPlayerEntity player = source.getPlayer();
@@ -102,7 +104,6 @@ public class PhylacteryCommand {
             PhylacteryComponent component = ComponentHandler.PHYLACTERY_KEY.get(player);
             player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
             PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos());
-
             return 1;
         }).build();
 

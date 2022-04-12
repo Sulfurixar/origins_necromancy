@@ -68,7 +68,11 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         tag.putDouble("playerY", player_y);
         tag.putDouble("playerZ", player_z);
 
-        tag.putString("world", world);
+        if (world == null) {
+            tag.putString("world", "none");
+        } else {
+            tag.putString("world", world);
+        }
     }
 
     @Override
