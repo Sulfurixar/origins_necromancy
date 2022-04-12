@@ -10,4 +10,6 @@ public interface IPhylacterComponent extends ComponentV3 {
     double playerX();
     double playerY();
     double playerZ();
+
+    String world();
 }

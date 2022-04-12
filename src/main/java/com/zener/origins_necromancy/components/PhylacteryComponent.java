@@ -18,6 +18,8 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
     private double player_y;
     private double player_z;
 
+    private String world;
+
     private final PlayerEntity provider;
 
     public PhylacteryComponent(PlayerEntity provider) {
@@ -36,6 +38,10 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         player_x = pos.x;
         player_y = pos.y;
         player_z = pos.z;
+    }
+
+    public void setWorld(String str) {
+        world = str;
     }
 
     @Override
@@ -58,6 +64,11 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         tag.putDouble("playerX", player_x);
         tag.putDouble("playerY", player_y);
         tag.putDouble("playerZ", player_z);
+    }
+
+    @Override
+    public String world() {
+        return world;
     }
 
     @Override

@@ -78,5 +78,6 @@
     "origins_necromancy.not_player": "You must be a player to run this command.",
     "origins_necromancy.no_phylactery": "There was no phylactery where you last bound yourself - if you ever bound yourself that is.",
     "origins_necromancy.not_bound": "You can't sense your phylactery...",
-    "origins_necromancy.found": "Soothing energy washes over you."
+    "origins_necromancy.found": "Soothing energy washes over you.",
+    "origins_necromancy.world_not_found": "The location of your phylactery seems to be lost to the void..."
 }

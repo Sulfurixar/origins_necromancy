@@ -66,20 +66,24 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
         return expectedType == giveType ? (@Nullable BlockEntityTicker<A>) ticker : null;
     }
 
+    public static void discharge(BlockState state, World world, BlockPos pos) {
+        if (state.get(CHARGED).booleanValue()) {
+            world.setBlockState(pos, state.with(CHARGED, false));
+            BlockEntity entity = world.getBlockEntity(pos);
+            if (entity instanceof PhylacteryEntity) {
+                PhylacteryEntity e = (PhylacteryEntity) entity;
+                e.uuid = null;
+            }
+        }
+    }
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
         if (!state.get(ON_BASE).booleanValue()) return ActionResult.SUCCESS;
 
         if (player.isSneaking()) {
-            if (state.get(CHARGED).booleanValue()) {
-                world.setBlockState(pos, state.with(CHARGED, false));
-                BlockEntity entity = world.getBlockEntity(pos);
-                if (entity instanceof PhylacteryEntity) {
-                    PhylacteryEntity e = (PhylacteryEntity) entity;
-                    e.uuid = null;
-                }
-            }
+            discharge(state, world, pos);
             return ActionResult.SUCCESS;
         }
 
@@ -100,6 +104,7 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
                     ((ServerPlayerEntity)player).getAdvancementTracker().revokeCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPhylactery(e);
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPlayer();
+                    ComponentHandler.PHYLACTERY_KEY.get(player).setWorld(player.world.getDimension().toString());
                 }
             }
 

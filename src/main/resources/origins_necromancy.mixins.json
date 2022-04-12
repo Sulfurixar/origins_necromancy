@@ -5,9 +5,15 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "ClientPlayNetworkHandlerMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "entity.common.MixinEntity",
+    "entity.common.MixinEntityTrackerEntry",
+    "entity.common.MixinPlayerManager",
+    "entity.common.MixinServerPlayerEntity",
+    "entity.common.MixinServerWorld"
   ],
   "client": [
+    "entity.client.MixinClientWorld"
   ],
   "injectors": {
     "defaultRequire": 1

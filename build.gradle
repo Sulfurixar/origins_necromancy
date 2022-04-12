@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
+	id 'java-library'
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
@@ -30,6 +31,8 @@ repositories {
 
 	}
 
+	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+
 }
 
 dependencies {
@@ -44,17 +47,20 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	modApi fabricApi.module("fabric-api-base", project.fabric_version)
+    modImplementation fabricApi.module("fabric-networking-api-v1", project.fabric_version)
+
 	modImplementation 'it.unimi.dsi:fastutil:8.5.8'
 	include 'it.unimi.dsi:fastutil:8.5.8'
 
-	// Adds a dependency on the base cardinal components module (required by every other module)
-    // Replace modImplementation with modApi if you expose components in your own API
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
-    // Adds a dependency on a specific module
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
-    // Includes Cardinal Components API as a Jar-in-Jar dependency (optional)
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
-    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
+	// luckperms
+	modImplementation "me.lucko:fabric-permissions-api:0.1-SNAPSHOT"
+	modApi 	"me.lucko:fabric-permissions-api:0.1-SNAPSHOT"
+	include	"me.lucko:fabric-permissions-api:0.1-SNAPSHOT"
+
+	compileOnly "com.demonwav.mcdev:annotations:1.0"
+	compileOnly "org.jetbrains:annotations:19.0.0"
+	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 }
 
 processResources {
@@ -75,6 +81,9 @@ java {
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
+	toolchain {
+        languageVersion.set(JavaLanguageVersion.of(16))
+    }
 }
 
 jar {
