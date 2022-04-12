@@ -105,6 +105,8 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPhylactery(e);
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPlayer();
                     ComponentHandler.PHYLACTERY_KEY.get(player).setWorld(player.world.getDimension().toString());
+                    ComponentHandler.PHYLACTERY_KEY.sync(player);
+
                 }
             }
 

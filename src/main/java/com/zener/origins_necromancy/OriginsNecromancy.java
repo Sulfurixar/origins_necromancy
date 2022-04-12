@@ -29,6 +29,6 @@ public class OriginsNecromancy implements ModInitializer {
 		ItemGen.registerItems();
 		BlockGen.registerBlocks();
 		CommandRegistrationCallback.EVENT.register(PhylacteryCommand::register);
-		
+
 	}
 }

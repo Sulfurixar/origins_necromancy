@@ -5,6 +5,7 @@ import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -53,6 +54,8 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         player_x = tag.getDouble("playerX");
         player_y = tag.getDouble("playerY");
         player_z = tag.getDouble("playerZ");
+
+        world = tag.getString("world");
     }
 
     @Override
@@ -64,6 +67,13 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         tag.putDouble("playerX", player_x);
         tag.putDouble("playerY", player_y);
         tag.putDouble("playerZ", player_z);
+
+        tag.putString("world", world);
+    }
+
+    @Override
+    public boolean shouldSyncWith(ServerPlayerEntity player) {
+        return player == this.provider; // only sync with the provider itself
     }
 
     @Override
