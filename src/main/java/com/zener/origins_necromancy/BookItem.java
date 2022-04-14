@@ -33,9 +33,25 @@ public class BookItem extends WrittenBookItem {
             souls.putInt(soul, 1);
         } else {
             int count = souls.getInt(soul);
-            if (count >= 9) {
-                user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
-                return false;
+            switch(soul) {
+                case "wither":
+                        if (count >= 4) {
+                            user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
+                            return false;
+                        }
+                    break;
+                case "leader_of_souls":
+                    if (count >= 1) {
+                        user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
+                        return false;
+                    }
+                    break;
+                default:
+                    if (count >= 9) {
+                        user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
+                        return false;
+                    }
+                    break;
             }
 
             souls.putInt(soul, count+1);
@@ -72,48 +88,27 @@ public class BookItem extends WrittenBookItem {
             boolean success = true;
             for (int i = 0; i < ItemGen.can_craft.length; i++) {
                 if (offhandStack.getItem().toString().equals(ItemGen.can_craft[i])) {
-                    switch(ItemGen.can_craft[i]) {
-                        case "skeleton":
-                        case "zombie":
-                        case "drowned":
-                        case "stray":
-                        case "wither_skeleton":
-                        case "husk":
-                        case "zoglin":
-                        case "zombie_horse":
-                        case "zombie_villager":
-                            success = addSoul(nbt,ItemGen.can_craft[i], user);
-                            break;
-
-                        case "zombie_piglin":
-                            success = addSoul(nbt,ItemGen.can_craft[i], user);
-                            break;
-                        case "skeleton_trap":
-                            success = addSoul(nbt,ItemGen.can_craft[i], user);
-                            break;
-                        default:
-                            OriginsNecromancy.LOGGER.atError().log("Unexpexted behaviour with missing book type.");
-                            success = false;
-                            break;
-                    }
+                    
+                    success = addSoul(nbt,ItemGen.can_craft[i], user);
 
                     if (success) {
                         offhandStack.decrement(1);
-                        return false;
+                    } else {
+                        OriginsNecromancy.LOGGER.atError().log("Unexpexted behaviour with missing book type.");
                     }
-                    break;
+                    return false;
                 }
             }
 
             MasterBook mb = new MasterBook();
             if (!nbt.contains("souls") || nbt.get("souls").getType() != NbtType.COMPOUND) {
-                nbt = mb.get(nbt, 0,0,0,0,0,0,0,0,0,0,0);
+                nbt = mb.get(nbt, 0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             } else {
                 NbtCompound souls = nbt.getCompound("souls");
                 int skeleton_count = getSouls(souls, "skeleton");
                 int zombie_count = getSouls(souls, "zombie");
                 int drowned_count = getSouls(souls, "drowned");
-                int piglin_count = getSouls(souls, "piglin");
+                int piglin_count = getSouls(souls, "zombie_piglin");
                 int stray_count = getSouls(souls, "stray");
                 int wither_skeleton_count = getSouls(souls, "wither_skeleton");
                 int husk_count = getSouls(souls, "husk");
@@ -121,8 +116,11 @@ public class BookItem extends WrittenBookItem {
                 int zombie_horse_count = getSouls(souls, "zombie_horse");
                 int zombie_villager_count = getSouls(souls, "zombie_villager");
                 int skeleton_horse_count = getSouls(souls, "skeleton_horse");
+                int wither_count = getSouls(souls, "wither");
+                int phantom_count = getSouls(souls, "phantom");
+                int leader_of_souls_count = getSouls(souls, "leader_of_souls");
 
-                nbt = mb.get(nbt, skeleton_count, zombie_count, drowned_count, piglin_count, stray_count, wither_skeleton_count, husk_count, zoglin_count, skeleton_horse_count, zombie_horse_count, zombie_villager_count);
+                nbt = mb.get(nbt, skeleton_count, zombie_count, drowned_count, piglin_count, stray_count, wither_skeleton_count, husk_count, zoglin_count, skeleton_horse_count, zombie_horse_count, zombie_villager_count, wither_count,phantom_count, leader_of_souls_count);
             }
 
             itemStack.setNbt(nbt);
