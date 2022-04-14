@@ -35,7 +35,7 @@ public class BookItem extends WrittenBookItem {
             int count = souls.getInt(soul);
             switch(soul) {
                 case "wither":
-                        if (count >= 4) {
+                        if (count >= 5) {
                             user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
                             return false;
                         }
@@ -47,7 +47,7 @@ public class BookItem extends WrittenBookItem {
                     }
                     break;
                 default:
-                    if (count >= 9) {
+                    if (count >= 10) {
                         user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
                         return false;
                     }
