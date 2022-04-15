@@ -19,7 +19,7 @@ public class BookItem extends WrittenBookItem {
     }
 
     private int getSouls(NbtCompound souls, String str) {
-        return (souls.contains(str) && souls.get(str).getType() == NbtType.INT && souls.getInt(str) > -1 && souls.getInt(str) < 10) ? souls.getInt(str) : 0;
+        return (souls.contains(str) && souls.get(str).getType() == NbtType.INT && souls.getInt(str) > -1 && souls.getInt(str) <= 10) ? souls.getInt(str) : 0;
     }
 
     private boolean addSoul(NbtCompound nbt, String soul, PlayerEntity user) {
