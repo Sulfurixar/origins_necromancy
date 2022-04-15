@@ -120,7 +120,7 @@ public class BookItem extends WrittenBookItem {
                 int phantom_count = getSouls(souls, "phantom");
                 int leader_of_souls_count = getSouls(souls, "leader_of_souls");
 
-                nbt = mb.get(nbt, skeleton_count, zombie_count, drowned_count, piglin_count, stray_count, wither_skeleton_count, husk_count, zoglin_count, skeleton_horse_count, zombie_horse_count, zombie_villager_count, wither_count,phantom_count, leader_of_souls_count);
+                nbt = mb.get(nbt, skeleton_count, zombie_count, drowned_count, piglin_count, stray_count, wither_skeleton_count, husk_count, zoglin_count, skeleton_horse_count, zombie_horse_count, zombie_villager_count, wither_count, phantom_count, leader_of_souls_count);
             }
 
             itemStack.setNbt(nbt);

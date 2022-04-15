@@ -40,7 +40,7 @@ public class ItemGen {
     public static Item[] Items;
 
     public static String[] can_craft = new String[] {
-        "skeleton", "zombie", "drowned", "zombie_piglin", "stray", "wither_skeleton", "husk", "zoglin", "zombie_horse", "skeleton_trap", "zombie_villager", "wither"
+        "skeleton", "zombie", "drowned", "zombie_piglin", "stray", "wither_skeleton", "husk", "zoglin", "zombie_horse", "skeleton_trap", "zombie_villager", "wither", "phantom"
     };
 
     public final static void registerItems() {
