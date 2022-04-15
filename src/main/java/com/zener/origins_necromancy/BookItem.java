@@ -34,6 +34,7 @@ public class BookItem extends WrittenBookItem {
         } else {
             int count = souls.getInt(soul);
             switch(soul) {
+                case "zoglin":
                 case "wither":
                         if (count >= 5) {
                             user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);
