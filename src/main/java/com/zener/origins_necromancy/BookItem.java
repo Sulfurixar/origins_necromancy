@@ -29,12 +29,24 @@ public class BookItem extends WrittenBookItem {
         } else {
             souls = nbt.getCompound("souls");
         }
+        int total_souls = 0;
+        String[] keys = souls.getKeys().toArray(new String[souls.getSize()]);
+        for (int i = 0; i < keys.length; i++) {
+            if (souls.get(keys[i]).getType() == NbtType.INT) {
+                total_souls += souls.getInt(keys[i]);
+            }
+        }
+        if (total_souls >= 15) {
+            user.sendMessage(TranslatedTexts.TOTAL_SOUL_COUNT_HIGH, true);
+            return false;
+        }
         if (!souls.contains(soul) || souls.get(soul).getType() != NbtType.INT) {
             souls.putInt(soul, 1);
         } else {
             int count = souls.getInt(soul);
             switch(soul) {
                 case "zoglin":
+                case "skeleton_trap":
                 case "wither":
                         if (count >= 5) {
                             user.sendMessage(TranslatedTexts.SOUL_COUNT_HIGH, true);

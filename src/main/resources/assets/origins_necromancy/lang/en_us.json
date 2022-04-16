@@ -1,5 +1,6 @@
 {
     "origins_necromancy.too_many_souls": "You have maxed out this soul type.",
+    "origins_necromancy.total_too_many_souls": "You have maxed out this Necronomicon.",
     "origins_necromancy.low_levels": "You don't have enough life essence!",
     "origins_necromancy.already_charged": "This phylactery is already charged.",
 
