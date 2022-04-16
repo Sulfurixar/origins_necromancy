@@ -116,7 +116,7 @@ public class BookItem extends WrittenBookItem {
                 int zoglin_count = getSouls(souls, "zoglin");
                 int zombie_horse_count = getSouls(souls, "zombie_horse");
                 int zombie_villager_count = getSouls(souls, "zombie_villager");
-                int skeleton_horse_count = getSouls(souls, "skeleton_horse");
+                int skeleton_horse_count = getSouls(souls, "skeleton_trap");
                 int wither_count = getSouls(souls, "wither");
                 int phantom_count = getSouls(souls, "phantom");
                 int leader_of_souls_count = getSouls(souls, "leader_of_souls");
