@@ -23,6 +23,9 @@
     ],
     "cardinal-components": [
       "com.zener.origins_necromancy.components.ComponentHandler"
+    ],
+    "client": [
+      "com.zener.origins_necromancy.OriginsNecromancyClient"
     ]
   },
   "mixins": [

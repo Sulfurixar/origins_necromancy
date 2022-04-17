@@ -2,8 +2,10 @@ package com.zener.origins_necromancy;
 
 import com.zener.origins_necromancy.phylactery.PhylacteryBaseBlock;
 import com.zener.origins_necromancy.phylactery.PhylacteryCrystalBlock;
+import com.zener.origins_necromancy.phylactery.PhylacteryCrystalRenderer;
 import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -32,6 +34,8 @@ public class BlockGen {
         Registry.register(Registry.ITEM, new Identifier(OriginsNecromancy.MOD_ID, "phylactery_crystal"), new BlockItem(PHYLACTERY_CRYSTAL, new FabricItemSettings().group(ItemGroup.MISC)));
 
         PHYLACTERY_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(OriginsNecromancy.MOD_ID, "phylactery"), FabricBlockEntityTypeBuilder.create(PhylacteryEntity::new, PHYLACTERY_CRYSTAL).build(null));
+        BlockEntityRendererRegistry.register(PHYLACTERY_ENTITY, PhylacteryCrystalRenderer::new);
+
         
     }
     
