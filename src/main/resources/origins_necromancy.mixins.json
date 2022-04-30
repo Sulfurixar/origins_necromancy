@@ -5,7 +5,12 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "ClientPlayNetworkHandlerMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "HostileEntityMixin",
+    "TargetPredicateMixin",
+    "LivingEntityMixin",
+    "RevengeGoalMixin",
+    "ITrackTargetGoalMixin"
   ],
   "client": [
   ],

@@ -37,7 +37,7 @@ public class OwnerUUIDComponent implements IOwnerUUIDComponent, AutoSyncedCompon
     }
 
     public void setOwner(PlayerEntity player) {
-        this.ownerUUID = player.getUuid();
+        ownerUUID = player.getUuid();
     }
 
     @Override
