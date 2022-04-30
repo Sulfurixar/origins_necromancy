@@ -38,7 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class PhylacterySummonCommand {
+public class SummonCommand {
     private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.failed"));
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.failed.uuid"));
     private static final SimpleCommandExceptionType INVALID_POSITION_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.invalidPosition"));
