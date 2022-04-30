@@ -7,7 +7,7 @@ import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.ImpossibleCriterion;
 import net.minecraft.util.Identifier;
 
-import com.zener.origins_necromancy.phylactery.PhylacteryCommand;
+import com.zener.origins_necromancy.commands.PhylacteryCommand;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package com.zener.origins_necromancy.phylactery;
+package com.zener.origins_necromancy.commands;
 
 import java.util.Iterator;
 import java.util.UUID;
@@ -11,6 +11,8 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.zener.origins_necromancy.OriginsNecromancy;
 import com.zener.origins_necromancy.components.ComponentHandler;
 import com.zener.origins_necromancy.components.PhylacteryComponent;
+import com.zener.origins_necromancy.phylactery.PhylacteryCrystalBlock;
+import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 
 import org.jetbrains.annotations.NotNull;
 
