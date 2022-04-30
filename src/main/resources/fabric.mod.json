@@ -42,7 +42,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "origins_necromancy:phylactery_player"
+      "origins_necromancy:phylactery_player",
+      "origins_necromancy:owner"
     ]
   }
 }

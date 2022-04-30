@@ -8,6 +8,7 @@ import net.minecraft.advancement.criterion.ImpossibleCriterion;
 import net.minecraft.util.Identifier;
 
 import com.zener.origins_necromancy.commands.PhylacteryCommand;
+import com.zener.origins_necromancy.commands.PhylacterySummonCommand;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +30,6 @@ public class OriginsNecromancy implements ModInitializer {
 		ItemGen.registerItems();
 		BlockGen.registerBlocks();
 		CommandRegistrationCallback.EVENT.register(PhylacteryCommand::register);
-
+		CommandRegistrationCallback.EVENT.register(PhylacterySummonCommand::register);
 	}
 }

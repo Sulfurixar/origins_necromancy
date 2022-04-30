@@ -5,11 +5,13 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.zener.origins_necromancy.OriginsNecromancy;
+import com.zener.origins_necromancy.components.ComponentHandler;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +29,6 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtLongArray;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
@@ -42,11 +43,11 @@ public class PhylacterySummonCommand {
     private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.failed.uuid"));
     private static final SimpleCommandExceptionType INVALID_POSITION_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.invalidPosition"));
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 
-        LiteralCommandNode<ServerCommandSource> summonCommandNode = CommandManager
+        LiteralCommandNode<ServerCommandSource> summonCommandNode = ((LiteralArgumentBuilder<ServerCommandSource>)((LiteralArgumentBuilder<ServerCommandSource>)CommandManager
             .literal("necrosummon")
-            .requires(require(OriginsNecromancy.MOD_ID+".necrosummon", 2))
+            .requires(require(OriginsNecromancy.MOD_ID+".necrosummon", 2)))
             .then(
                 (RequiredArgumentBuilder<ServerCommandSource, Identifier>)CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
@@ -58,48 +59,49 @@ public class PhylacterySummonCommand {
                     true,
                     null
                 ))
-            )
-            .then(
-                (RequiredArgumentBuilder<ServerCommandSource,PosArgument>)CommandManager.argument("pos", Vec3ArgumentType.vec3())
-                .executes(context -> execute(
-                    context.getSource(),
-                    EntitySummonArgumentType.getEntitySummon(context, "entity"),
-                    Vec3ArgumentType.getVec3(context, "pos"),
-                    new NbtCompound(),
-                    true,
-                    null
-                ))
-            )
-            .then(
-                CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
-                .executes(context -> execute(
-                    context.getSource(),
-                    EntitySummonArgumentType.getEntitySummon(context, "entity"),
-                    Vec3ArgumentType.getVec3(context, "pos"),
-                    NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
-                    false,
-                    null
-                ))
-            )
-            .then(
-                CommandManager.literal("for")
                 .then(
-                    CommandManager.argument("player", EntityArgumentType.player())
+                    (RequiredArgumentBuilder<ServerCommandSource,PosArgument>)CommandManager.argument("pos", Vec3ArgumentType.vec3())
                     .executes(context -> execute(
                         context.getSource(),
                         EntitySummonArgumentType.getEntitySummon(context, "entity"),
                         Vec3ArgumentType.getVec3(context, "pos"),
-                        NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
-                        false,
-                        EntityArgumentType.getPlayer(context, "player")
+                        new NbtCompound(),
+                        true,
+                        null
                     ))
+                    .then(
+                        CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
+                        .executes(context -> execute(
+                            context.getSource(),
+                            EntitySummonArgumentType.getEntitySummon(context, "entity"),
+                            Vec3ArgumentType.getVec3(context, "pos"),
+                            NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
+                            false,
+                            null
+                        ))
+                        .then(
+                            CommandManager.literal("for")
+                            .then(
+                                CommandManager.argument("player", EntityArgumentType.player())
+                                .executes(context -> execute(
+                                    context.getSource(),
+                                    EntitySummonArgumentType.getEntitySummon(context, "entity"),
+                                    Vec3ArgumentType.getVec3(context, "pos"),
+                                    NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
+                                    false,
+                                    EntityArgumentType.getPlayer(context, "player")
+                                ))
+                            )
+                        )
+                    )
                 )
             )
-        .build();
+        ).build();
         
         dispatcher.getRoot().addChild(summonCommandNode);
-        /*
-        (LiteralArgumentBuilder)((LiteralArgumentBuilder)CommandManager.literal("summon").requires(source -> source.hasPermissionLevel(2)))
+
+        
+        /*(LiteralArgumentBuilder)((LiteralArgumentBuilder)CommandManager.literal("summon").requires(source -> source.hasPermissionLevel(2)))
         .then(((RequiredArgumentBuilder)CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES).executes(context -> 
             SummonCommand.execute((ServerCommandSource)context.getSource(), EntitySummonArgumentType.getEntitySummon(context, "entity"), 
@@ -117,10 +119,6 @@ public class PhylacterySummonCommand {
             throw INVALID_POSITION_EXCEPTION.create();
         }
         NbtCompound nbtCompound = nbt.copy();
-        if (player != null) {
-            NbtLongArray OwnerUUID = new NbtLongArray(new long[] { player.getUuid().getMostSignificantBits(), player.getUuid().getLeastSignificantBits() });
-            nbt.put("Owner", OwnerUUID);
-        }
         nbtCompound.putString("id", entity2.toString());
         ServerWorld serverWorld = source.getWorld();
         Entity entity22 = EntityType.loadEntityWithPassengers(nbtCompound, serverWorld, entity -> {
@@ -135,6 +133,9 @@ public class PhylacterySummonCommand {
         }
         if (!serverWorld.shouldCreateNewEntityWithPassenger(entity22)) {
             throw FAILED_UUID_EXCEPTION.create();
+        }
+        if (player != null) {
+            ComponentHandler.OWNER_KEY.get(entity22).setOwner(player);
         }
         source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.success", entity22.getDisplayName()), true);
         return 1;
