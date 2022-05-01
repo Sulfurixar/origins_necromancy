@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "origins_necromancy:bone_tile"
+    },
+    "result": "origins_necromancy:bone_tile_stairs",
+    "count": 1
+}

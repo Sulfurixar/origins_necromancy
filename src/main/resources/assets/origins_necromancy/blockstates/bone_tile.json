@@ -1,0 +1,8 @@
+{
+	"variants":
+	{
+        "":  [
+			{ "model": "origins_necromancy:block/bone_tile" }
+		]
+    }
+}

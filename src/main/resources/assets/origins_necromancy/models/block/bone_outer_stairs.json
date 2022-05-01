@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "origins_necromancy:block/bone_block",
+        "top": "origins_necromancy:block/bone_block",
+        "side": "origins_necromancy:block/bone_block"
+    }
+}

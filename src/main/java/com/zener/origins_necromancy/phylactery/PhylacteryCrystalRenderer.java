@@ -37,7 +37,7 @@ public class PhylacteryCrystalRenderer implements BlockEntityRenderer<Phylactery
             matrices.translate(0.5, offset, 0.5);
     
             // Rotate the item
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 0.1f));
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
 

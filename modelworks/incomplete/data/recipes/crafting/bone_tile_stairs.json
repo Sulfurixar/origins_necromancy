@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#  ",
+        "## ",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "origins_necromancy:bone_tile"
+        }
+    },
+    "result": {
+        "item": "origins_necromancy:bone_tile_stairs",
+        "count": 4
+    }
+}

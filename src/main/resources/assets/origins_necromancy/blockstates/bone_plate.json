@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "origins_necromancy:block/bone_pressure_plate_up" },
+        "powered=true": { "model": "origins_necromancy:block/bone_pressure_plate_down" }
+    }
+}

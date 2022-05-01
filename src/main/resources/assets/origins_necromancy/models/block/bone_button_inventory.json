@@ -1,0 +1,6 @@
+{
+    "parent": "block/button_inventory",
+    "textures": {
+        "texture": "origins_necromancy:block/bone_block"
+    }
+}

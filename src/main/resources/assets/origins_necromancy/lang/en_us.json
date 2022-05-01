@@ -4,9 +4,20 @@
     "origins_necromancy.low_levels": "You don't have enough life essence!",
     "origins_necromancy.already_charged": "This phylactery is already charged.",
 
+    "itemGroup.minecraft.origins_necromancy": "§4Origins Necromancy",
+
     "block.origins_necromancy.phylactery_crystal": "Phylactery Crystal",
     "block.origins_necromancy.phylactery_base": "Phylactery Base",
     "item.origins_necromancy.phylactery_crtstal_anim": "Phylactery Crystal",
+    "block.origins_necromancy.bone_block": "Bone Block",
+    "block.origins_necromancy.bone_stairs": "Bone Stairs",
+    "block.origins_necromancy.bone_slab": "Bone Slab",
+    "block.origins_necromancy.bone_button": "Bone Button",
+    "block.origins_necromancy.bone_plate": "Bone Pressure Plate",
+    "block.origins_necromancy.bone_wall": "Bone Wall",
+    "block.origins_necromancy.bone_tile": "Bone Tile",
+    "block.origins_necromancy.bone_tile_slab": "Bone Tile Slab",
+    "block.origins_necromancy.bone_tile_stairs": "Bone Tile Stairs",
 
     "item.origins_necromancy.skeleton": "Book of Skeletons",
     "item.origins_necromancy.zombie": "Book of Zombies",

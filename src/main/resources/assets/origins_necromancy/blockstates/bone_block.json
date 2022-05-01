@@ -1,0 +1,14 @@
+{
+	"variants":
+	{
+        "":  [
+			{ "model": "origins_necromancy:block/bone_block" },
+			{ "model": "origins_necromancy:block/bone_block", "x": 180 },
+			{ "model": "origins_necromancy:block/bone_block", "y": 180 },
+			{ "model": "origins_necromancy:block/bone_block", "z": 180 },
+			{ "model": "origins_necromancy:block/bone_block", "x": 180, "y": 180 },
+			{ "model": "origins_necromancy:block/bone_block", "z": 180, "y": 180 },
+			{ "model": "origins_necromancy:block/bone_block", "x": 180, "z": 180 }
+		]
+    }
+}

@@ -11,6 +11,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class OwnerUUIDComponent implements IOwnerUUIDComponent, AutoSyncedComponent {
 
     private UUID ownerUUID;
+    
+    @SuppressWarnings("unused")
     private final Entity provider;
 
     public OwnerUUIDComponent(Entity provider) {

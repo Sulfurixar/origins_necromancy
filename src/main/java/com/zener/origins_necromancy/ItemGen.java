@@ -2,10 +2,12 @@ package com.zener.origins_necromancy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -48,20 +50,23 @@ public class ItemGen {
         for (int i = 0; i < BOOKS.size(); i++) {
             String[] strArr = BOOKS.get(i);
             for (int j = 0; j < strArr.length; j++) {
-                Item book = new BookItem(new Item.Settings().maxCount(1).group(ItemGroup.MISC));
+                Item book = new BookItem(new Item.Settings().maxCount(1));
                 Registry.register(Registry.ITEM, new Identifier(OriginsNecromancy.MOD_ID, strArr[j]), book);
                 items.add(book);
                 if (i > 0) {
                     for (int n = 0; n < i+1; n++) {
-                        Item sub_book = new PageItem(new Item.Settings().maxCount(1).group(ItemGroup.MISC));
+                        Item sub_book = new PageItem(new Item.Settings().maxCount(1));
                         Registry.register(Registry.ITEM, new Identifier(OriginsNecromancy.MOD_ID, strArr[j]+"_"+n), sub_book);
                         items.add(sub_book);
                     }
                 }
             }
         }
+        OriginsNecromancy.TAB.appendItems(stacks -> stacks.addAll(items.stream().map(ItemStack::new).collect(Collectors.toList())));
         Items = items.toArray(new Item[items.size()]);
         Registry.register(Registry.ITEM, new Identifier(OriginsNecromancy.MOD_ID, "phylactery_crystal_anim"), PHYLACTERY_CRYSTAL_ANIM);
+
+
     }
     
 }

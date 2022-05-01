@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "origins_necromancy:bone_block"
+    },
+    "result": "origins_necromancy:bone_tile_slab",
+    "count": 2
+}

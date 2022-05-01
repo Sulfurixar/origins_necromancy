@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "origins_necromancy:block/bone_tile_slab_top",
+        "top": "origins_necromancy:block/bone_tile_slab_top",
+        "side": "origins_necromancy:block/bone_tile_stair_side"
+    }
+}

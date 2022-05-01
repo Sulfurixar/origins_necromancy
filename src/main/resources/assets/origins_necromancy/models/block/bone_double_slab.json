@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "origins_necromancy:block/bone_slab_side",
+        "down": "origins_necromancy:block/bone_slab_top",
+        "up": "origins_necromancy:block/bone_slab_top",
+        "north": "origins_necromancy:block/bone_slab_side",
+        "east": "origins_necromancy:block/bone_slab_side",
+        "south": "origins_necromancy:block/bone_slab_side",
+        "west": "origins_necromancy:block/bone_slab_side"
+    }
+}

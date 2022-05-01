@@ -1,0 +1,13 @@
+{
+    "replace": false,
+    "values": [
+        "origins_necromancy:phylactery_base",
+        "origins_necromancy:phylactery_crystal",
+        "origins_necromancy:bone_block",
+        "origins_necromancy:bone_stairs",
+        "origins_necromancy:bone_slab",
+        "origins_necromancy:bone_tile_slab",
+        "origins_necromancy:bone_wall",
+        "origins_necromancy:bone_tile"
+    ]
+}

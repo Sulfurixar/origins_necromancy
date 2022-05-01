@@ -1,0 +1,6 @@
+{
+    "parent": "origins_necromancy:block/bone_wall_ns",
+    "textures": {
+        "top": "origins_necromancy:block/bone_wall_top_ew"
+    }
+}

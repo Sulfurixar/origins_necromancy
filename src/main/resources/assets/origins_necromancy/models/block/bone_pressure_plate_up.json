@@ -1,0 +1,6 @@
+{
+    "parent": "block/pressure_plate_up",
+    "textures": {
+        "texture": "origins_necromancy:block/bone_block_plate"
+    }
+}
