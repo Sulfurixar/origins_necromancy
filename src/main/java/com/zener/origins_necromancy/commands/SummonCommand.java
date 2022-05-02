@@ -57,7 +57,7 @@ public class SummonCommand {
                     context.getSource().getPosition(),
                     new NbtCompound(),
                     true,
-                    null
+                    context.getSource().getPlayer()
                 ))
                 .then(
                     (RequiredArgumentBuilder<ServerCommandSource,PosArgument>)CommandManager.argument("pos", Vec3ArgumentType.vec3())
@@ -67,7 +67,7 @@ public class SummonCommand {
                         Vec3ArgumentType.getVec3(context, "pos"),
                         new NbtCompound(),
                         true,
-                        null
+                        context.getSource().getPlayer()
                     ))
                     .then(
                         CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
@@ -77,7 +77,7 @@ public class SummonCommand {
                             Vec3ArgumentType.getVec3(context, "pos"),
                             NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
                             false,
-                            null
+                            context.getSource().getPlayer()
                         ))
                         .then(
                             CommandManager.literal("for")
@@ -92,6 +92,32 @@ public class SummonCommand {
                                     EntityArgumentType.getPlayer(context, "player")
                                 ))
                             )
+                        )
+                    )
+                    .then(
+                        CommandManager.literal("for")
+                            .then(
+                                CommandManager.argument("player", EntityArgumentType.player())
+                                .executes(context -> execute(
+                                    context.getSource(),
+                                    EntitySummonArgumentType.getEntitySummon(context, "entity"),
+                                    Vec3ArgumentType.getVec3(context, "pos"),
+                                    new NbtCompound(),
+                                    true,
+                                    EntityArgumentType.getPlayer(context, "player")
+                                ))
+                                .then(
+                                    CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
+                                        .executes(context -> execute(
+                                            context.getSource(),
+                                            EntitySummonArgumentType.getEntitySummon(context, "entity"),
+                                            Vec3ArgumentType.getVec3(context, "pos"),
+                                            NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
+                                            false,
+                                            EntityArgumentType.getPlayer(context, "player")
+                                        )
+                                    )
+                                )
                         )
                     )
                 )
