@@ -10,7 +10,9 @@
     "TargetPredicateMixin",
     "LivingEntityMixin",
     "RevengeGoalMixin",
-    "ITrackTargetGoalMixin"
+    "ITrackTargetGoalMixin",
+    "ISkeletonHorseTrapTriggerGoalMixin",
+    "SkeletonHorseTrapTriggerGoalMixin"
   ],
   "client": [
   ],

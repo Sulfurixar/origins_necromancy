@@ -125,18 +125,6 @@ public class SummonCommand {
         ).build();
         
         dispatcher.getRoot().addChild(summonCommandNode);
-
-        
-        /*(LiteralArgumentBuilder)((LiteralArgumentBuilder)CommandManager.literal("summon").requires(source -> source.hasPermissionLevel(2)))
-        .then(((RequiredArgumentBuilder)CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
-        .suggests(SuggestionProviders.SUMMONABLE_ENTITIES).executes(context -> 
-            SummonCommand.execute((ServerCommandSource)context.getSource(), EntitySummonArgumentType.getEntitySummon(context, "entity"), 
-            ((ServerCommandSource)context.getSource()).getPosition(), new NbtCompound(), true)))
-            .then(((RequiredArgumentBuilder)CommandManager.argument("pos", Vec3ArgumentType.vec3()).executes(context -> 
-            SummonCommand.execute((ServerCommandSource)context.getSource(), EntitySummonArgumentType.getEntitySummon(context, "entity"), Vec3ArgumentType.getVec3(context, "pos"), new NbtCompound(), true)))
-            .then(CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound()).executes(context -> SummonCommand.execute((ServerCommandSource)context.getSource(), 
-            EntitySummonArgumentType.getEntitySummon(context, "entity"), Vec3ArgumentType.getVec3(context, "pos"), NbtCompoundArgumentType.getNbtCompound(context, "nbt"), false)))))
-        */
     }
 
     private static int execute(ServerCommandSource source, Identifier entity2, Vec3d pos, NbtCompound nbt, boolean initialize, @Nullable PlayerEntity player) throws CommandSyntaxException {
