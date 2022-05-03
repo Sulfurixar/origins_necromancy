@@ -49,7 +49,7 @@ public class SummonCommand {
             .literal("necrosummon")
             .requires(require(OriginsNecromancy.MOD_ID+".necrosummon", 2)))
             .then(
-                (RequiredArgumentBuilder<ServerCommandSource, Identifier>)CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
+                CommandManager.argument("entity", EntitySummonArgumentType.entitySummon())
                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                 .executes(context -> execute(
                     context.getSource(),
@@ -60,7 +60,7 @@ public class SummonCommand {
                     context.getSource().getPlayer()
                 ))
                 .then(
-                    (RequiredArgumentBuilder<ServerCommandSource,PosArgument>)CommandManager.argument("pos", Vec3ArgumentType.vec3())
+                    CommandManager.argument("pos", Vec3ArgumentType.vec3())
                     .executes(context -> execute(
                         context.getSource(),
                         EntitySummonArgumentType.getEntitySummon(context, "entity"),
