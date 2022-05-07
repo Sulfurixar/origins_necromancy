@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "origins_necromancy:block/bone_slab_top"
+        "all": "origins_necromancy:block/bone_tile_slab_top"
     }
 }
