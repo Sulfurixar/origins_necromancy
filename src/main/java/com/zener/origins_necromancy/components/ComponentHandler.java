@@ -22,9 +22,13 @@ public final class ComponentHandler implements EntityComponentInitializer {
     public static final ComponentKey<OwnerUUIDComponent> OWNER_KEY = ComponentRegistryV3.INSTANCE
         .getOrCreate(new Identifier(OriginsNecromancy.MOD_ID, "owner"), OwnerUUIDComponent.class);
 
+    public static final ComponentKey<TargetComponent> TARGET_COMPONENT = ComponentRegistryV3.INSTANCE
+        .getOrCreate(new Identifier(OriginsNecromancy.MOD_ID, "target"), TargetComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(PHYLACTERY_KEY, player -> new PhylacteryComponent(player), RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(TARGET_COMPONENT, player -> new TargetComponent(player), RespawnCopyStrategy.ALWAYS_COPY);
         
         List<Object> added_entities = new ArrayList<Object>();
         Registry.ENTITY_TYPE.getEntries().forEach(e -> {

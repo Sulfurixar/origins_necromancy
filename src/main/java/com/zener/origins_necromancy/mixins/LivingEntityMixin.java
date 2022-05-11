@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.zener.origins_necromancy.ILivingEntityMixin;
 import com.zener.origins_necromancy.components.ComponentHandler;
+import com.zener.origins_necromancy.components.OwnerUUIDComponent;
 import com.zener.origins_necromancy.components.PhylacteryComponent;
 import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 
@@ -31,10 +32,23 @@ public class LivingEntityMixin implements ILivingEntityMixin {
 
     @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("TAIL"), cancellable = true)
     public void canTarget(LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        UUID owner_uuid = ComponentHandler.OWNER_KEY.get((Entity)((Object)this)).OwnerUUID();
+        OwnerUUIDComponent ownerUUIDComponent = ComponentHandler.OWNER_KEY.get((Entity)((Object)this));
+        UUID owner_uuid = ownerUUIDComponent.OwnerUUID();
         if (owner_uuid != null && owner_uuid.equals(target.getUuid())) {
             cir.setReturnValue(false);
             cir.cancel();
+        }
+
+        if (target.getEntityWorld().isClient()) return;
+
+        ServerPlayerEntity owner = ((Entity)((Object)this)).getServer().getPlayerManager().getPlayer(ownerUUIDComponent.OwnerUUID());
+        
+        if (owner != null) {
+            Entity _target = ComponentHandler.TARGET_COMPONENT.get(owner).getTarget();
+            if (_target != null && _target.getUuid().equals(target.getUuid())) {
+                cir.setReturnValue(true);
+                cir.cancel();
+            }
         }
     }
 
@@ -45,6 +59,8 @@ public class LivingEntityMixin implements ILivingEntityMixin {
             ILivingEntityMixin e = ((ILivingEntityMixin)(Object)this);
             if (e.getVarItemStack().isEmpty()) {    // Didn't find an item at saveItemStack or in tryUseTotem
                 teleportPlayer((LivingEntity)(Object)this);
+                cir.setReturnValue(true);
+                cir.cancel();
             }
             e.setVarItemStack(ItemStack.EMPTY);
         }

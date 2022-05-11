@@ -11,10 +11,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 @Mixin(TargetPredicate.class)
 public class TargetPredicateMixin {
@@ -35,6 +37,23 @@ public class TargetPredicateMixin {
                     mob.setTarget(null);
                 }
             }
+
+            if (!baseEntity.getEntityWorld().isClient()) {
+                ServerPlayerEntity owner = baseEntity.getServer().getPlayerManager().getPlayer(owner_uuid);
+                if (owner != null) {
+                    Entity target = ComponentHandler.TARGET_COMPONENT.get(owner).getTarget();
+                    if (target != null && target.getUuid().equals(targetEntity.getUuid())) {
+                        baseEntity.setAttacker(targetEntity);
+                        if (baseEntity instanceof PathAwareEntity) {
+                            MobEntity mob = (MobEntity)baseEntity;
+                            mob.setTarget(targetEntity);
+                        }
+                        cir.setReturnValue(true);
+                        cir.cancel();
+                    }
+                }
+            }
+
             cir.setReturnValue(false);
             cir.cancel();
         }
