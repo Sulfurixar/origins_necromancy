@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.zener.origins_necromancy.ILivingEntityMixin;
 import com.zener.origins_necromancy.components.ComponentHandler;
 import com.zener.origins_necromancy.components.PhylacteryComponent;
-import com.zener.origins_necromancy.phylactery.PhylacteryCrystalBlock;
 import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,8 +20,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -68,15 +65,7 @@ public class LivingEntityMixin implements ILivingEntityMixin {
             ServerPlayerEntity player = (ServerPlayerEntity)entity;
             PhylacteryEntity phylacteryEntity = findPhylactery(player);
             PhylacteryComponent component = ComponentHandler.PHYLACTERY_KEY.get(player);
-            if (PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
-                player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
-                player.setHealth(1.0f);
-                player.clearStatusEffects();
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
-                player.world.sendEntityStatus(player, (byte)35);
-            }
+            PhylacteryEntity.playerRespawn(player, phylacteryEntity, component);
         }
     }
 

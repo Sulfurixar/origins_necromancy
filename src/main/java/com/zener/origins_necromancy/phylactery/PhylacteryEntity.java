@@ -3,10 +3,15 @@ package com.zener.origins_necromancy.phylactery;
 import java.util.UUID;
 
 import com.zener.origins_necromancy.BlockGen;
+import com.zener.origins_necromancy.components.PhylacteryComponent;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -47,6 +52,18 @@ public class PhylacteryEntity extends BlockEntity {
             blockEntity.uuid = null;
         } else {
             world.setBlockState(pos, state.with(PhylacteryCrystalBlock.ON_BASE, blockEntity.has_base));
+        }
+    }
+
+    public static void playerRespawn(ServerPlayerEntity player, PhylacteryEntity phylacteryEntity, PhylacteryComponent component) {
+        if (PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
+            player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
+            player.setHealth(player.getMaxHealth());
+            player.clearStatusEffects();
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+            player.world.sendEntityStatus(player, (byte)35);
         }
     }
 
