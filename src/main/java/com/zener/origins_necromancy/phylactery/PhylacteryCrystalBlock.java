@@ -66,7 +66,7 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
         return expectedType == giveType ? (@Nullable BlockEntityTicker<A>) ticker : null;
     }
 
-    public static void discharge(BlockState state, World world, BlockPos pos) {
+    public static boolean discharge(BlockState state, World world, BlockPos pos) {
         if (state.get(CHARGED).booleanValue()) {
             world.setBlockState(pos, state.with(CHARGED, false));
             BlockEntity entity = world.getBlockEntity(pos);
@@ -74,7 +74,9 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
                 PhylacteryEntity e = (PhylacteryEntity) entity;
                 e.uuid = null;
             }
+            return true;
         }
+        return false;
     }
 
     @Override

@@ -20,5 +20,4 @@ public class ServerPlayerEntityMixin {
         ServerPlayerEntity me = ((ServerPlayerEntity)(Object)this);
         UseBook.use(me, book, hand);
     }
-
 }

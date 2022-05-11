@@ -19,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.command.CommandSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -104,8 +106,15 @@ public class PhylacteryCommand {
             // ADD MORE STUFF
             
             PhylacteryComponent component = ComponentHandler.PHYLACTERY_KEY.get(player);
-            player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
-            PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos());
+            if(PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
+                player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
+                player.setHealth(1.0f);
+                player.clearStatusEffects();
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+                player.world.sendEntityStatus(player, (byte)35);
+            }
             return 1;
         }).build();
 
