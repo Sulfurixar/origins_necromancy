@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import lombok.Data;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 @Data
 public class TargetComponent implements ITargetComponent {
-    private Entity target;
+    private LivingEntity target;
     private World world;
     private final PlayerEntity player;
 
@@ -22,7 +22,7 @@ public class TargetComponent implements ITargetComponent {
         this.player = player;
     }
 
-    public void setTarget(Entity target) {
+    public void setTarget(LivingEntity target) {
         this.target = target;
         setWorld(target.getEntityWorld());
     }
@@ -38,7 +38,7 @@ public class TargetComponent implements ITargetComponent {
                 while (iterator.hasNext()) {
                     ServerWorld _world = iterator.next();
                     if (_world.getDimension().getSuffix().equals(world)) {
-                        target = _world.getEntity(uuid);
+                        target = (LivingEntity)_world.getEntity(uuid);
                         this.world = _world;
                         return;
                     }

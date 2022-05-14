@@ -34,22 +34,26 @@ public class LivingEntityMixin implements ILivingEntityMixin {
     public void canTarget(LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
         OwnerUUIDComponent ownerUUIDComponent = ComponentHandler.OWNER_KEY.get((Entity)((Object)this));
         UUID owner_uuid = ownerUUIDComponent.OwnerUUID();
+        boolean stop = false;
         if (owner_uuid != null && owner_uuid.equals(target.getUuid())) {
             cir.setReturnValue(false);
-            cir.cancel();
+            stop = true;
         }
 
-        if (target.getEntityWorld().isClient()) return;
-
-        ServerPlayerEntity owner = ((Entity)((Object)this)).getServer().getPlayerManager().getPlayer(ownerUUIDComponent.OwnerUUID());
+        if (!target.getEntityWorld().isClient()) {
+            ServerPlayerEntity owner = ((Entity)((Object)this)).getServer().getPlayerManager().getPlayer(ownerUUIDComponent.OwnerUUID());
         
-        if (owner != null) {
-            Entity _target = ComponentHandler.TARGET_COMPONENT.get(owner).getTarget();
-            if (_target != null && _target.getUuid().equals(target.getUuid())) {
-                cir.setReturnValue(true);
-                cir.cancel();
+            if (owner != null) {
+                Entity _target = ComponentHandler.TARGET_COMPONENT.get(owner).getTarget();
+                if (_target != null && _target.getUuid().equals(target.getUuid())) {
+                    cir.setReturnValue(true);
+                    stop = true;
+                }
             }
         }
+
+        if (stop) { cir.cancel(); }
+
     }
 
     @Inject(method = "tryUseTotem(Lnet/minecraft/entity/damage/DamageSource;)Z", 
@@ -58,9 +62,10 @@ public class LivingEntityMixin implements ILivingEntityMixin {
         if ((LivingEntity)(Object)this instanceof PlayerEntity) {
             ILivingEntityMixin e = ((ILivingEntityMixin)(Object)this);
             if (e.getVarItemStack().isEmpty()) {    // Didn't find an item at saveItemStack or in tryUseTotem
-                teleportPlayer((LivingEntity)(Object)this);
-                cir.setReturnValue(true);
-                cir.cancel();
+                if (teleportPlayer((LivingEntity)(Object)this)) {
+                    cir.setReturnValue(true);
+                    cir.cancel();
+                }
             }
             e.setVarItemStack(ItemStack.EMPTY);
         }
@@ -75,14 +80,15 @@ public class LivingEntityMixin implements ILivingEntityMixin {
         return stack;
     }
 
-    private void teleportPlayer(LivingEntity entity) {
+    private boolean teleportPlayer(LivingEntity entity) {
         if (entity instanceof PlayerEntity) {
-            if (entity.getEntityWorld().isClient()) { return; }
+            if (entity.getEntityWorld().isClient()) { return false; }
             ServerPlayerEntity player = (ServerPlayerEntity)entity;
             PhylacteryEntity phylacteryEntity = findPhylactery(player);
             PhylacteryComponent component = ComponentHandler.PHYLACTERY_KEY.get(player);
-            PhylacteryEntity.playerRespawn(player, phylacteryEntity, component);
+            return PhylacteryEntity.playerRespawn(player, phylacteryEntity, component);
         }
+        return false;
     }
 
     private PhylacteryEntity findPhylactery(ServerPlayerEntity player) {

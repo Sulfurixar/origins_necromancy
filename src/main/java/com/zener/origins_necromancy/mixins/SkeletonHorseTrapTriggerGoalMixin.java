@@ -26,6 +26,7 @@ public class SkeletonHorseTrapTriggerGoalMixin {
         SkeletonEntity skeleton = ((ISkeletonHorseTrapTriggerGoalMixin)goal).$getSkeleton(difficulty, horse);
         UUID owner = ComponentHandler.OWNER_KEY.get(horse).OwnerUUID();
         ComponentHandler.OWNER_KEY.get(skeleton).setOwner(owner);
+        ComponentHandler.OWNER_KEY.sync(skeleton);
         return skeleton;
     }
 
@@ -40,6 +41,7 @@ public class SkeletonHorseTrapTriggerGoalMixin {
         HorseBaseEntity horse = ((ISkeletonHorseTrapTriggerGoalMixin)goal).$getHorse(difficulty);
         UUID owner = ComponentHandler.OWNER_KEY.get(skeletonHorse).OwnerUUID();
         ComponentHandler.OWNER_KEY.get(horse).setOwner(owner);
+        ComponentHandler.OWNER_KEY.sync(horse);
         return horse;
         
     }

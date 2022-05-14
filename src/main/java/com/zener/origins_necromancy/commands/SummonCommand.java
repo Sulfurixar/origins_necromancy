@@ -148,6 +148,7 @@ public class SummonCommand {
         }
         if (player != null) {
             ComponentHandler.OWNER_KEY.get(entity22).setOwner(player);
+            ComponentHandler.OWNER_KEY.sync(entity22);
         }
         source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.success", entity22.getDisplayName()), true);
         return 1;

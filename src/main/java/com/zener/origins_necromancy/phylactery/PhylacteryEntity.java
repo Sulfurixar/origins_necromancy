@@ -55,7 +55,7 @@ public class PhylacteryEntity extends BlockEntity {
         }
     }
 
-    public static void playerRespawn(ServerPlayerEntity player, PhylacteryEntity phylacteryEntity, PhylacteryComponent component) {
+    public static boolean playerRespawn(ServerPlayerEntity player, PhylacteryEntity phylacteryEntity, PhylacteryComponent component) {
         if (PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
             player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
             player.setHealth(player.getMaxHealth());
@@ -64,7 +64,9 @@ public class PhylacteryEntity extends BlockEntity {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
             player.world.sendEntityStatus(player, (byte)35);
+            return true;
         }
+        return false;
     }
 
 }

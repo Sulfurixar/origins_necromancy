@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 
 import com.zener.origins_necromancy.commands.PhylacteryCommand;
 import com.zener.origins_necromancy.commands.SummonCommand;
+import com.zener.origins_necromancy.commands.TargetCommand;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,5 +38,6 @@ public class OriginsNecromancy implements ModInitializer {
 		TAB.build();
 		CommandRegistrationCallback.EVENT.register(PhylacteryCommand::register);
 		CommandRegistrationCallback.EVENT.register(SummonCommand::register);
+		CommandRegistrationCallback.EVENT.register(TargetCommand::register);
 	}
 }
