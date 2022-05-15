@@ -56,7 +56,7 @@ public class PhylacteryEntity extends BlockEntity {
     }
 
     public static boolean playerRespawn(ServerPlayerEntity player, PhylacteryEntity phylacteryEntity, PhylacteryComponent component) {
-        if (PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
+        if (phylacteryEntity != null && PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
             player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
             player.setHealth(player.getMaxHealth());
             player.clearStatusEffects();
