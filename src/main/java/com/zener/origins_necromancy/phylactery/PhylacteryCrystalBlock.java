@@ -15,7 +15,9 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -27,6 +29,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 public class PhylacteryCrystalBlock extends BlockWithEntity {
 
@@ -57,7 +60,8 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new PhylacteryEntity(pos, state);
+        PhylacteryEntity p = new PhylacteryEntity(pos, state);
+        return p;
     }
     
     @SuppressWarnings("unchecked")
@@ -67,15 +71,22 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
     }
 
     public static boolean discharge(BlockState state, World world, BlockPos pos) {
+        OriginsNecromancy.LOGGER.info("\t\tAttempting discharge...");
         if (state.get(CHARGED).booleanValue()) {
             world.setBlockState(pos, state.with(CHARGED, false));
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof PhylacteryEntity) {
                 PhylacteryEntity e = (PhylacteryEntity) entity;
                 e.uuid = null;
+                ComponentHandler.PHYLACTERY_COMPONENT.get(world).updatePhylactery(e);
+            } else {
+                ComponentHandler.PHYLACTERY_COMPONENT.get(world).updatePhylactery(pos, state, null);
             }
+            ComponentHandler.PHYLACTERY_COMPONENT.sync(world);
+            OriginsNecromancy.LOGGER.info("\t\tDischarge successful!");
             return true;
         }
+        OriginsNecromancy.LOGGER.info("\t\tDischarge unsuccessful!");
         return false;
     }
 
@@ -99,9 +110,9 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof PhylacteryEntity) {
                 PhylacteryEntity e = (PhylacteryEntity) entity;
+                ComponentHandler.PHYLACTERY_COMPONENT.get(world).updatePhylactery(e);
                 e.uuid = player.getUuid();
                 if (!world.isClient) {
-                    System.out.println(OriginsNecromancy.PHYLACTERY_ADVANCEMENT.getId().toString());
                     ((ServerPlayerEntity)player).getAdvancementTracker().grantCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
                     ((ServerPlayerEntity)player).getAdvancementTracker().revokeCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPhylactery(e);
@@ -122,6 +133,18 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, BlockGen.PHYLACTERY_ENTITY, (_world, pos, _state, be) -> PhylacteryEntity.serverTick(_world, pos, _state, be));
+    }
+
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        ComponentHandler.PHYLACTERY_COMPONENT.get(world).removePhylactery(pos);
+        super.onBroken(world, pos, state);
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        ComponentHandler.PHYLACTERY_COMPONENT.get(world).addPhylactery(pos, state, null);
+        super.onPlaced(world, pos, state, placer, itemStack);
     }
 
 }

@@ -1,10 +1,13 @@
 package com.zener.origins_necromancy.components;
 
+import com.zener.origins_necromancy.OriginsNecromancy;
 import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -21,6 +24,8 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
 
     private String world;
 
+    private PhylacteryEntity phylacteryEntity;
+
     private final PlayerEntity provider;
 
     public PhylacteryComponent(PlayerEntity provider) {
@@ -32,6 +37,7 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         phylactery_x = pos.getX();
         phylactery_y = pos.getY();
         phylactery_z = pos.getZ();
+        phylacteryEntity = phylactery;
     }
 
     public void setPlayer() {
@@ -56,6 +62,22 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
         player_z = tag.getDouble("playerZ");
 
         world = tag.getString("world");
+
+        if (tag.contains("phylactery_entity")) {
+            OriginsNecromancy.LOGGER.info("Found Phylactery data: " + provider);
+            NbtCompound phylactery = tag.getCompound("phylactery_entity");
+            BlockState state = NbtHelper.toBlockState(phylactery.getCompound("state"));
+            BlockPos pos = NbtHelper.toBlockPos(phylactery.getCompound("pos"));
+            try {
+                PhylacteryEntity phylacteryEntity = (PhylacteryEntity)PhylacteryEntity.createFromNbt(pos, state, phylactery.getCompound("nbt"));
+                if (phylacteryEntity != null) {
+                    this.phylacteryEntity = phylacteryEntity;
+                }
+            } catch (Exception e) {
+                OriginsNecromancy.LOGGER.error(e);
+            }
+            
+        }
     }
 
     @Override
@@ -72,6 +94,16 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
             tag.putString("world", "none");
         } else {
             tag.putString("world", world);
+        }
+
+        if (phylacteryEntity != null) {
+            NbtCompound phylactery = new NbtCompound();
+            phylactery.put("pos", NbtHelper.fromBlockPos(phylacteryEntity.getPos()));
+            phylactery.put("state", NbtHelper.fromBlockState(phylacteryEntity.getCachedState()));
+            NbtCompound nbt = new NbtCompound();
+            phylacteryEntity.readNbt(nbt);
+            phylactery.put("nbt", nbt);
+            tag.put("phylactery_entity", phylactery);
         }
     }
 
@@ -113,6 +145,11 @@ public class PhylacteryComponent implements IPhylacterComponent, AutoSyncedCompo
     @Override
     public double playerZ() {
         return player_z;
+    }
+
+    @Override
+    public PhylacteryEntity phylacteryEntity() {
+        return phylacteryEntity;
     }
     
 }

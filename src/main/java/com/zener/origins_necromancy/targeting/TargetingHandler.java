@@ -18,6 +18,7 @@ public class TargetingHandler {
     
     // returns boolean based on whether cir was set or not
     public static boolean target_override(LivingEntity attacker, @Nullable LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
+        if (attacker == null) return false;
         if (attacker.getEntityWorld().isClient()) return false;
         UUID owner_uuid = ComponentHandler.OWNER_KEY.get(attacker).OwnerUUID();
         // we don't want to attack an owner

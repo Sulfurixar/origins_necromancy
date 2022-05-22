@@ -1,5 +1,7 @@
 package com.zener.origins_necromancy.components;
 
+import com.zener.origins_necromancy.phylactery.PhylacteryEntity;
+
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 
 public interface IPhylacterComponent extends ComponentV3 {
@@ -12,4 +14,6 @@ public interface IPhylacterComponent extends ComponentV3 {
     double playerZ();
 
     String world();
+
+    PhylacteryEntity phylacteryEntity();
 }

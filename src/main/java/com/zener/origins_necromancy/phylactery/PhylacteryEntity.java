@@ -3,7 +3,9 @@ package com.zener.origins_necromancy.phylactery;
 import java.util.UUID;
 
 import com.zener.origins_necromancy.BlockGen;
+import com.zener.origins_necromancy.OriginsNecromancy;
 import com.zener.origins_necromancy.components.PhylacteryComponent;
+import com.zener.origins_necromancy.components.IWorldPhylacteryComponent.PhylacteryData;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -56,6 +58,7 @@ public class PhylacteryEntity extends BlockEntity {
     }
 
     public static boolean playerRespawn(ServerPlayerEntity player, PhylacteryEntity phylacteryEntity, PhylacteryComponent component) {
+        OriginsNecromancy.LOGGER.info("\tAttempting death prevention...");
         if (phylacteryEntity != null && PhylacteryCrystalBlock.discharge(phylacteryEntity.getCachedState(), phylacteryEntity.getWorld(), phylacteryEntity.getPos())) {
             player.teleport((ServerWorld)phylacteryEntity.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
             player.setHealth(player.getMaxHealth());
@@ -64,8 +67,27 @@ public class PhylacteryEntity extends BlockEntity {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
             player.world.sendEntityStatus(player, (byte)35);
+            OriginsNecromancy.LOGGER.info("\tRespawn Success!");
             return true;
         }
+        OriginsNecromancy.LOGGER.info("\tRespawn Failed!");
+        return false;
+    }
+
+    public static boolean playerRespawn(ServerPlayerEntity player, PhylacteryData data, PhylacteryComponent component) {
+        OriginsNecromancy.LOGGER.info("\tAttempting death prevention...");
+        if (data != null && PhylacteryCrystalBlock.discharge(data.getBlockState(), data.getWorld(), data.getBlockPos())) {
+            player.teleport((ServerWorld)data.getWorld(), component.playerX(), component.playerY(), component.playerZ(), 0, 0);
+            player.setHealth(player.getMaxHealth());
+            player.clearStatusEffects();
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 900, 1));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 100, 1));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 800, 0));
+            player.world.sendEntityStatus(player, (byte)35);
+            OriginsNecromancy.LOGGER.info("\tRespawn Success!");
+            return true;
+        }
+        OriginsNecromancy.LOGGER.info("\tRespawn Failed!");
         return false;
     }
 

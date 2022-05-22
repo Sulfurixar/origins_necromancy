@@ -64,9 +64,13 @@ dependencies {
 
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components}"
     modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:${project.cardinal_components}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_components}"
 
 	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components}"
     include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:${project.cardinal_components}"
+	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_components}"
 }
 
 processResources {
