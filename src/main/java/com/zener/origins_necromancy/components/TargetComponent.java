@@ -37,7 +37,7 @@ public class TargetComponent implements ITargetComponent {
                 Iterator<ServerWorld> iterator = ((ServerPlayerEntity)player).server.getWorlds().iterator();
                 while (iterator.hasNext()) {
                     ServerWorld _world = iterator.next();
-                    if (_world.getDimension().getSuffix().equals(world)) {
+                    if (_world.getDimension().toString().equals(world)) {
                         target = (LivingEntity)_world.getEntity(uuid);
                         this.world = _world;
                         return;
@@ -51,7 +51,7 @@ public class TargetComponent implements ITargetComponent {
     public void writeToNbt(NbtCompound tag) {
         if (target == null) return;
         UUID uuid = target.getUuid();
-        String world = this.world.getDimension().getSuffix();
+        String world = this.world.getDimension().toString();
         tag.putUuid("target", uuid);
         tag.putString("world", world);
     }

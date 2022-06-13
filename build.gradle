@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
 	id 'java-library'
 }
@@ -62,15 +62,15 @@ dependencies {
 	compileOnly "org.jetbrains:annotations:19.0.0"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components}"
-    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components}"
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:${project.cardinal_components}"
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_components}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cardinal_components}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-block:${project.cardinal_components}"
 
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components}"
-    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:${project.cardinal_components}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_components}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cardinal_components}"
+	include "dev.onyxstudios.cardinal-components-api:cardinal-components-block:${project.cardinal_components}"
 }
 
 processResources {

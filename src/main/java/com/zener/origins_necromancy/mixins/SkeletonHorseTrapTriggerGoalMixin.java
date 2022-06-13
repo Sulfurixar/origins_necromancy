@@ -13,15 +13,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import net.minecraft.entity.ai.goal.SkeletonHorseTrapTriggerGoal;
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.mob.SkeletonHorseEntity;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.world.LocalDifficulty;
 
 @Mixin(SkeletonHorseTrapTriggerGoal.class)
 public class SkeletonHorseTrapTriggerGoalMixin {
     
     @Redirect(method = "tick()V", at = @At(value = "INVOKE", 
-    target = "Lnet/minecraft/entity/ai/goal/SkeletonHorseTrapTriggerGoal;getSkeleton(Lnet/minecraft/world/LocalDifficulty;Lnet/minecraft/entity/passive/HorseBaseEntity;)Lnet/minecraft/entity/mob/SkeletonEntity;"))
-    private SkeletonEntity setSkeletonOwner(SkeletonHorseTrapTriggerGoal goal, LocalDifficulty difficulty, HorseBaseEntity horse) {
+    target = "Lnet/minecraft/entity/ai/goal/SkeletonHorseTrapTriggerGoal;getSkeleton(Lnet/minecraft/world/LocalDifficulty;Lnet/minecraft/entity/passive/AbstractHorseEntity;)Lnet/minecraft/entity/mob/SkeletonEntity;"))
+    private SkeletonEntity setSkeletonOwner(SkeletonHorseTrapTriggerGoal goal, LocalDifficulty difficulty, AbstractHorseEntity horse) {
 
         SkeletonEntity skeleton = ((ISkeletonHorseTrapTriggerGoalMixin)goal).$getSkeleton(difficulty, horse);
         UUID owner = ComponentHandler.OWNER_KEY.get(horse).OwnerUUID();
@@ -35,10 +35,10 @@ public class SkeletonHorseTrapTriggerGoalMixin {
     private SkeletonHorseEntity skeletonHorse;
 
     @Redirect(method = "tick()V", at = @At(value = "INVOKE", 
-    target = "Lnet/minecraft/entity/ai/goal/SkeletonHorseTrapTriggerGoal;getHorse(Lnet/minecraft/world/LocalDifficulty;)Lnet/minecraft/entity/passive/HorseBaseEntity;"))
-    private HorseBaseEntity setHorseOwner(SkeletonHorseTrapTriggerGoal goal, LocalDifficulty difficulty) {
+    target = "Lnet/minecraft/entity/ai/goal/SkeletonHorseTrapTriggerGoal;getHorse(Lnet/minecraft/world/LocalDifficulty;)Lnet/minecraft/entity/passive/AbstractHorseEntity;"))
+    private AbstractHorseEntity setHorseOwner(SkeletonHorseTrapTriggerGoal goal, LocalDifficulty difficulty) {
 
-        HorseBaseEntity horse = ((ISkeletonHorseTrapTriggerGoalMixin)goal).$getHorse(difficulty);
+        AbstractHorseEntity horse = ((ISkeletonHorseTrapTriggerGoalMixin)goal).$getHorse(difficulty);
         UUID owner = ComponentHandler.OWNER_KEY.get(skeletonHorse).OwnerUUID();
         ComponentHandler.OWNER_KEY.get(horse).setOwner(owner);
         ComponentHandler.OWNER_KEY.sync(horse);

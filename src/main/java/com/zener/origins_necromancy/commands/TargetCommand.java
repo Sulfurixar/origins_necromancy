@@ -23,7 +23,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -48,9 +48,9 @@ public class TargetCommand {
     }
 
     private static int runTarget(ServerCommandSource source, ServerPlayerEntity player) {
-        if (player == null) { source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".necrotarget.no_player"), false); return 0; }
+        if (player == null) { source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".necrotarget.no_player"), false); return 0; }
         LivingEntity target = raycast(player);
-        if (target == null) { source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".necrotarget.no_target"), false); return 0; }
+        if (target == null) { source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".necrotarget.no_target"), false); return 0; }
         TargetComponent targetComponent = ComponentHandler.TARGET_COMPONENT.get(player);
         targetComponent.setTarget(target);
         ComponentHandler.TARGET_COMPONENT.sync(player);

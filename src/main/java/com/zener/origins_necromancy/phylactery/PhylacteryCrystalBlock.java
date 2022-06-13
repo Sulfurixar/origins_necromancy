@@ -117,7 +117,7 @@ public class PhylacteryCrystalBlock extends BlockWithEntity {
                     ((ServerPlayerEntity)player).getAdvancementTracker().revokeCriterion(OriginsNecromancy.PHYLACTERY_ADVANCEMENT, "command");
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPhylactery(e);
                     ComponentHandler.PHYLACTERY_KEY.get(player).setPlayer();
-                    ComponentHandler.PHYLACTERY_KEY.get(player).setWorld(player.world.getDimension().getSuffix());
+                    ComponentHandler.PHYLACTERY_KEY.get(player).setWorld(player.world.getDimension().toString());
                     ComponentHandler.PHYLACTERY_KEY.sync(player);
 
                 }

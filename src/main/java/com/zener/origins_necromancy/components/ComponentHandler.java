@@ -48,7 +48,7 @@ public final class ComponentHandler implements EntityComponentInitializer, World
         registry.registerForPlayers(TARGET_COMPONENT, player -> new TargetComponent(player), RespawnCopyStrategy.ALWAYS_COPY);
         
         List<Object> added_entities = new ArrayList<Object>();
-        Registry.ENTITY_TYPE.getEntries().forEach(e -> {
+        Registry.ENTITY_TYPE.getEntrySet().forEach(e -> {
             Class<? extends Entity> entity = e.getValue().getBaseClass();
             if (!added_entities.contains(entity)) {
                 added_entities.add(entity);

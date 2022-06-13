@@ -30,16 +30,16 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class SummonCommand {
-    private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.failed"));
-    private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.failed.uuid"));
-    private static final SimpleCommandExceptionType INVALID_POSITION_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.invalidPosition"));
+    private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable(OriginsNecromancy.MOD_ID+".summon.failed"));
+    private static final SimpleCommandExceptionType FAILED_UUID_EXCEPTION = new SimpleCommandExceptionType(Text.translatable(OriginsNecromancy.MOD_ID+".summon.failed.uuid"));
+    private static final SimpleCommandExceptionType INVALID_POSITION_EXCEPTION = new SimpleCommandExceptionType(Text.translatable(OriginsNecromancy.MOD_ID+".summon.invalidPosition"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, boolean dedicated) {
 
@@ -124,7 +124,7 @@ public class SummonCommand {
         
         dispatcher.getRoot().addChild(summonCommandNode);
     }
-
+    
     private static int execute(ServerCommandSource source, Identifier entity2, Vec3d pos, NbtCompound nbt, boolean initialize, @Nullable PlayerEntity player) throws CommandSyntaxException {
         BlockPos blockPos = new BlockPos(pos);
         if (!World.isValid(blockPos)) {
@@ -143,14 +143,14 @@ public class SummonCommand {
         if (initialize && entity22 instanceof MobEntity) {
             ((MobEntity)entity22).initialize(source.getWorld(), source.getWorld().getLocalDifficulty(entity22.getBlockPos()), SpawnReason.COMMAND, null, null);
         }
-        if (!serverWorld.shouldCreateNewEntityWithPassenger(entity22)) {
+        if (!serverWorld.spawnNewEntityAndPassengers(entity22)) {
             throw FAILED_UUID_EXCEPTION.create();
         }
         if (player != null) {
             ComponentHandler.OWNER_KEY.get(entity22).setOwner(player);
             ComponentHandler.OWNER_KEY.sync(entity22);
         }
-        source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".summon.success", entity22.getDisplayName()), true);
+        source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".summon.success", entity22.getDisplayName()), true);
         return 1;
     }
 

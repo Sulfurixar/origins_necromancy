@@ -120,8 +120,8 @@ public class LivingEntityMixin implements ILivingEntityMixin {
         Iterator<ServerWorld> iterator = ((ServerPlayerEntity)player).server.getWorlds().iterator();
         while (iterator.hasNext()) {
             ServerWorld world = iterator.next();
-            OriginsNecromancy.LOGGER.info("\t\tComparing worlds: '"+world.getDimension().getSuffix()+"'=='"+component.world()+"'");
-            if (world.getDimension().getSuffix().equals(component.world())) {
+            OriginsNecromancy.LOGGER.info("\t\tComparing worlds: '"+world.getDimension().toString()+"'=='"+component.world()+"'");
+            if (world.getDimension().toString().equals(component.world())) {
                 PhylacteryData data = ComponentHandler.PHYLACTERY_COMPONENT.get(world).getPhylacteries().get(blockPos);
                 return data;
             }
@@ -136,8 +136,8 @@ public class LivingEntityMixin implements ILivingEntityMixin {
         Iterator<ServerWorld> iterator = ((ServerPlayerEntity)player).server.getWorlds().iterator();
         while (iterator.hasNext()) {
             ServerWorld world = iterator.next();
-            OriginsNecromancy.LOGGER.info("\t\tComparing worlds: '"+world.getDimension().getSuffix()+"'=='"+component.world()+"'");
-            if (world.getDimension().getSuffix().equals(component.world())) {
+            OriginsNecromancy.LOGGER.info("\t\tComparing worlds: '"+world.getDimension().toString()+"'=='"+component.world()+"'");
+            if (world.getDimension().toString().equals(component.world())) {
                 Optional<PhylacteryEntity> opt = world.getBlockEntity(phylacteryPos, BlockGen.PHYLACTERY_ENTITY);
                 if (!opt.isPresent()) {
                     return null;

@@ -22,7 +22,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public class PhylacteryCommand {
@@ -42,7 +42,7 @@ public class PhylacteryCommand {
         ServerCommandSource source = ctx.getSource();
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) {
-            source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".not_player"), true);
+            source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".not_player"), true);
             return null;
         }
 
@@ -51,17 +51,17 @@ public class PhylacteryCommand {
         Iterator<ServerWorld> iterator = ((ServerPlayerEntity)player).server.getWorlds().iterator();
         while (iterator.hasNext()) {
             ServerWorld world = iterator.next();
-            if (world.getDimension().getSuffix().equals(component.world())) {
+            if (world.getDimension().toString().equals(component.world())) {
                 BlockEntity blockEntity = world.getBlockEntity(phylacteryPos);
                 if (!(blockEntity instanceof PhylacteryEntity)) {
-                    source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".no_phylactery"), false);
+                    source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".no_phylactery"), false);
                     return null;
                 }
                 return ((PhylacteryEntity) blockEntity);
             }
         }
 
-        source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".world_not_found"), false);
+        source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".world_not_found"), false);
         return null;
     }
     
@@ -76,10 +76,10 @@ public class PhylacteryCommand {
             UUID phylacteryUUID = phylacteryEntity.uuid;
             UUID playerUUID = player.getUuid();
             if (phylacteryUUID == null || playerUUID == null || phylacteryUUID.compareTo(playerUUID) != 0) {
-                source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".not_bound"), false);
+                source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".not_bound"), false);
                 return 0;
             }
-            source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".found"), false);
+            source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".found"), false);
             return 1;
         }).build();
 
@@ -95,10 +95,10 @@ public class PhylacteryCommand {
             UUID phylacteryUUID = phylacteryEntity.uuid;
             UUID playerUUID = player.getUuid();
             if (phylacteryUUID == null || playerUUID == null || phylacteryUUID.compareTo(playerUUID) != 0) {
-                source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".not_bound"), false);
+                source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".not_bound"), false);
                 return 0;
             }
-            source.sendFeedback(new TranslatableText(OriginsNecromancy.MOD_ID+".found"), false);
+            source.sendFeedback(Text.translatable(OriginsNecromancy.MOD_ID+".found"), false);
 
             // ADD MORE STUFF
             

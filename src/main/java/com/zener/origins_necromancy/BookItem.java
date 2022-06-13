@@ -17,10 +17,9 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.text.HoverEvent.Action;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -125,7 +124,7 @@ public class BookItem extends WrittenBookItem {
 
             bookTag.put("pages", pages);
 
-            bookTag.putString("title", new TranslatableText(itemStack.getTranslationKey()).getString());
+            bookTag.putString("title", Text.translatable(itemStack.getTranslationKey()).getString());
 
             bookTag.put("author", NbtString.of("---"));
 
@@ -139,25 +138,25 @@ public class BookItem extends WrittenBookItem {
 
     public Text genDesc() {
         int rand = new Random().nextInt(mob_pairs.size());
-        Map.Entry<TranslatableText, TranslatableText> rand_entry = new ArrayList<>(mob_pairs.entrySet()).get(rand);
-        Text description = new LiteralText("You notice some scribbles and text about ").setStyle(Style.EMPTY.withItalic(true)).append(
-            new LiteralText(genString(rand_entry.getValue().getString())).setStyle(
+        Map.Entry<MutableText, MutableText> rand_entry = new ArrayList<>(mob_pairs.entrySet()).get(rand);
+        Text description = Text.literal("You notice some scribbles and text about ").setStyle(Style.EMPTY.withItalic(true)).append(
+            Text.literal(genString(rand_entry.getValue().getString())).setStyle(
                 Style.EMPTY.withItalic(false).withHoverEvent(
-                    new HoverEvent(Action.SHOW_TEXT, new LiteralText(rand_entry.getValue().getString()+"(s)")
+                    new HoverEvent(Action.SHOW_TEXT, Text.literal(rand_entry.getValue().getString()+"(s)")
                         .setStyle(Style.EMPTY.withColor(11141290).withItalic(true)))
                 ).withColor(11141290)
             ).append(
-                new LiteralText(" that seems to reveal some kind of a lead about them in ").setStyle(
+                Text.literal(" that seems to reveal some kind of a lead about them in ").setStyle(
                     Style.EMPTY.withColor(0).withItalic(true)
                 ).append(
-                    new LiteralText(genString(rand_entry.getKey().getString())).setStyle(
+                    Text.literal(genString(rand_entry.getKey().getString())).setStyle(
                         Style.EMPTY.withItalic(false).withColor(11141290).withHoverEvent( new HoverEvent(
                             Action.SHOW_TEXT, rand_entry.getKey().setStyle(
                                 Style.EMPTY.withItalic(true).withColor(11141290)
                             )
                         ))
                     ).append(
-                        new LiteralText(".").setStyle(Style.EMPTY.withItalic(true).withColor(0))
+                        Text.literal(".").setStyle(Style.EMPTY.withItalic(true).withColor(0))
                     )
                 )
             )
@@ -222,102 +221,102 @@ public class BookItem extends WrittenBookItem {
         return true;
     }
 
-    private static Map<TranslatableText, TranslatableText> mob_pairs = new HashMap<>() {{
+    private static Map<MutableText, MutableText> mob_pairs = new HashMap<>() {{
         put(
-            new TranslatableText("book.origins_necromancy.skeleton1"), 
-            new TranslatableText("entity.minecraft.skeleton")
+            Text.translatable("book.origins_necromancy.skeleton1"), 
+            Text.translatable("entity.minecraft.skeleton")
         );
         put(
-            new TranslatableText("book.origins_necromancy.skeleton2"), 
-            new TranslatableText("entity.minecraft.skeleton")
+            Text.translatable("book.origins_necromancy.skeleton2"), 
+            Text.translatable("entity.minecraft.skeleton")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie1"), 
-            new TranslatableText("entity.minecraft.zombie")
+            Text.translatable("book.origins_necromancy.zombie1"), 
+            Text.translatable("entity.minecraft.zombie")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie2"), 
-            new TranslatableText("entity.minecraft.zombie")
+            Text.translatable("book.origins_necromancy.zombie2"), 
+            Text.translatable("entity.minecraft.zombie")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_piglin1"), 
-            new TranslatableText("entity.minecraft.zombieified_piglin")
+            Text.translatable("book.origins_necromancy.zombie_piglin1"), 
+            Text.translatable("entity.minecraft.zombieified_piglin")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_piglin2"), 
-            new TranslatableText("entity.minecraft.zombified_piglin")
+            Text.translatable("book.origins_necromancy.zombie_piglin2"), 
+            Text.translatable("entity.minecraft.zombified_piglin")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zoglin1"), 
-            new TranslatableText("entity.minecraft.zoglin")
+            Text.translatable("book.origins_necromancy.zoglin1"), 
+            Text.translatable("entity.minecraft.zoglin")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zoglin2"), 
-            new TranslatableText("entity.minecraft.zoglin")
+            Text.translatable("book.origins_necromancy.zoglin2"), 
+            Text.translatable("entity.minecraft.zoglin")
         );
         put(
-            new TranslatableText("book.origins_necromancy.wither_skeleton"), 
-            new TranslatableText("entity.minecraft.wither_skeleton")
+            Text.translatable("book.origins_necromancy.wither_skeleton"), 
+            Text.translatable("entity.minecraft.wither_skeleton")
         );
         put(
-            new TranslatableText("book.origins_necromancy.withering1"), 
-            new TranslatableText("book.origins_necromancy.withering_name")
+            Text.translatable("book.origins_necromancy.withering1"), 
+            Text.translatable("book.origins_necromancy.withering_name")
         );
         put(
-            new TranslatableText("book.origins_necromancy.withering2"), 
-            new TranslatableText("book.origins_necromancy.withering_name")
+            Text.translatable("book.origins_necromancy.withering2"), 
+            Text.translatable("book.origins_necromancy.withering_name")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_villager1"), 
-            new TranslatableText("entity.minecraft.zombie_villager")
+            Text.translatable("book.origins_necromancy.zombie_villager1"), 
+            Text.translatable("entity.minecraft.zombie_villager")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_villager2"), 
-            new TranslatableText("entity.minecraft.zombie_villager")
+            Text.translatable("book.origins_necromancy.zombie_villager2"), 
+            Text.translatable("entity.minecraft.zombie_villager")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_villager3"), 
-            new TranslatableText("entity.minecraft.zombie_villager")
+            Text.translatable("book.origins_necromancy.zombie_villager3"), 
+            Text.translatable("entity.minecraft.zombie_villager")
         );
         put(
-            new TranslatableText("book.origins_necromancy.phantom1"), 
-            new TranslatableText("entity.minecraft.phantom")
+            Text.translatable("book.origins_necromancy.phantom1"), 
+            Text.translatable("entity.minecraft.phantom")
         );
         put(
-            new TranslatableText("book.origins_necromancy.phantom2"), 
-            new TranslatableText("entity.minecraft.phantom")
+            Text.translatable("book.origins_necromancy.phantom2"), 
+            Text.translatable("entity.minecraft.phantom")
         );
         put(
-            new TranslatableText("book.origins_necromancy.stray"), 
-            new TranslatableText("entity.minecraft.stray")
+            Text.translatable("book.origins_necromancy.stray"), 
+            Text.translatable("entity.minecraft.stray")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_horse1"), 
-            new TranslatableText("entity.minecraft.zombie_horse")
+            Text.translatable("book.origins_necromancy.zombie_horse1"), 
+            Text.translatable("entity.minecraft.zombie_horse")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_horse2"), 
-            new TranslatableText("entity.minecraft.zombie_horse")
+            Text.translatable("book.origins_necromancy.zombie_horse2"), 
+            Text.translatable("entity.minecraft.zombie_horse")
         );
         put(
-            new TranslatableText("book.origins_necromancy.zombie_horse3"), 
-            new TranslatableText("entity.minecraft.zombie_horse")
+            Text.translatable("book.origins_necromancy.zombie_horse3"), 
+            Text.translatable("entity.minecraft.zombie_horse")
         );
         put(
-            new TranslatableText("book.origins_necromancy.husk"), 
-            new TranslatableText("entity.minecraft.husk")
+            Text.translatable("book.origins_necromancy.husk"), 
+            Text.translatable("entity.minecraft.husk")
         );
         put(
-            new TranslatableText("book.origins_necromancy.skeleton_trap1"), 
-            new TranslatableText("book.origins_necromancy.skeleton_trap_name")
+            Text.translatable("book.origins_necromancy.skeleton_trap1"), 
+            Text.translatable("book.origins_necromancy.skeleton_trap_name")
         );
         put(
-            new TranslatableText("book.origins_necromancy.skeleton_trap2"), 
-            new TranslatableText("book.origins_necromancy.skeleton_trap_name")
+            Text.translatable("book.origins_necromancy.skeleton_trap2"), 
+            Text.translatable("book.origins_necromancy.skeleton_trap_name")
         );
         put(
-            new TranslatableText("book.origins_necromancy.leader_of_souls"), 
-            new TranslatableText("book.origins_necromancy.leader_of_souls_name")
+            Text.translatable("book.origins_necromancy.leader_of_souls"), 
+            Text.translatable("book.origins_necromancy.leader_of_souls_name")
         );
     }};
     

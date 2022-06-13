@@ -27,14 +27,13 @@ public class PhylacteryEntity extends BlockEntity {
     }
     
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
         if (uuid != null) {
             tag.putUuid("UUID", uuid);
         }
         tag.putBoolean("b", this.getCachedState().get(PhylacteryCrystalBlock.ON_BASE));
         tag.putBoolean("c", this.getCachedState().get(PhylacteryCrystalBlock.CHARGED));
-        return tag;
     }
 
     @Override
